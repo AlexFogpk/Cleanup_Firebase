@@ -3,6 +3,15 @@ from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+# Читаем ключ Firebase из переменной окружения "FIREBASE_CREDENTIALS"
+firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
+if not firebase_credentials:
+    raise ValueError("Environment variable FIREBASE_CREDENTIALS is not set.")
+
+# Записываем содержимое переменной в файл firebase.json
+with open("firebase.json", "w") as f:
+    f.write(firebase_credentials)
+
 # Инициализация Firebase
 cred = credentials.Certificate("firebase.json")
 firebase_admin.initialize_app(cred)
